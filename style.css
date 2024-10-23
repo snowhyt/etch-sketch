@@ -8,9 +8,9 @@ body{
 }
 
 #sketch-area{
-    display: flex;
+    display:flex;
     flex-wrap: wrap;
-    background-color: white;
+    background-color: blue;
     margin: 100px auto;
     box-shadow: 10px 10px rgba(0, 170, 255, 0.034);
 }
