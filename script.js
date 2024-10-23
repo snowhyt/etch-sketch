@@ -1,27 +1,27 @@
-const GRIDESIDE= 600;
-let rows = 16;
-let cols = 16;
+const GRIDSIDE= 600;
+const squaresPerSide = 16;
 
 const sketchArea = document.getElementById("sketch-area");
-sketchArea.style.width = `${GRIDESIDE}px`;
-sketchArea.style.height =`${GRIDESIDE}px`;
+sketchArea.style.width = sketchArea.style.height =`${GRIDSIDE}px`;
 
 
-function changeBackground(){
+function setBackgroundColor(){
     this.style.backgroundColor = "black";
 }
 
 function createGridCells() {
-    for(let i = 0; i < (rows * cols); i++){
-        const gridCell = document.createElement("div");
 
-        gridCell.style.width = `${(GRIDESIDE / cols)-2}px`;
-        gridCell.style.height = `${(GRIDESIDE / rows)-2}px`;
+    const numOfSquares = (squaresPerSide * squaresPerSide);
+    const widthHeight = `${(GRIDSIDE/squaresPerSide)-2}px`; 
+    for(let i = 0; i < numOfSquares; i++){
+        const gridCell = document.createElement("div");
+        gridCell.style.width = widthHeight;
+        gridCell.style.height = widthHeight;
         gridCell.classList.add("cell");
 
         sketchArea.appendChild(gridCell);
 
-        gridCell.addEventListener('mouseover', changeBackground);
+        gridCell.addEventListener('mouseover', setBackgroundColor);
     }
 }
 
