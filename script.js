@@ -13,7 +13,7 @@ sketchArea.style.width = sketchArea.style.height =`${GRIDSIDE}px`;
 
 
 function setBackgroundColor(){
-    this.style.backgroundColor = "black";
+    this.style.backgroundColor = "pink";
 }
 
 function createGridCells(squaresPerSide) {
@@ -28,14 +28,22 @@ function createGridCells(squaresPerSide) {
 
         sketchArea.appendChild(gridCell);
 
-        gridCell.addEventListener('mouseover', setBackgroundColor);
+        gridCell.addEventListener('mouseenter', setBackgroundColor);
     }
 }
 
-function removeCell(){
+function removeGridCells(){
     while(sketchArea.firstChild){
         sketchArea.removeChild(sketchArea.firstChild);
     }
+}
+
+
+slider.oninput = function(){
+    let txt = `${this.value} x ${this.value} (Resolution)`;
+    sliderValue.innerHTML = txt;
+    removeGridCells();
+    createGridCells(this.value);
 }
 
 
