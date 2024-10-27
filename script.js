@@ -3,6 +3,10 @@ const accentColor =getComputedStyle(document.body).getPropertyValue("--accent-co
 const inactiveColor =getComputedStyle(document.body).getPropertyValue("--inactive-color")
 
 
+//sarili kong code eraser
+
+//end
+
 const container = document.querySelector(".container");
 
 const sketchArea = document.getElementById("sketch-area");
@@ -12,6 +16,20 @@ const sliderValue = document.getElementById("slider-value");
 
 
 const gridToggle = document.getElementById("grid-toggle");
+
+//sarili kong code eraser
+const eraserToggle = document.getElementById("eraser-toggle");
+let eraserVisible = false;
+
+function toggleEraser(){
+    eraserVisible = eraserVisible ? false : true;
+    eraserToggle.style.color = eraserVisible ? accentColor : inactiveColor;
+    setBackgroundColor();
+
+}
+
+
+//end
 
 // sliderValue.textContent = `${slider.value} x ${slider.value} (Resolution)`;
 // sketchArea.style.width = sketchArea.style.height =`${GRIDSIDE}px`;
@@ -28,7 +46,16 @@ function toggleGrid(){
 }
 
 function setBackgroundColor(){
-    this.style.backgroundColor = "pink";
+    
+    
+    if (eraserVisible){
+        this.style.backgroundColor = "white";
+    } else {
+        this.style.backgroundColor = "pink";
+    }
+
+    //sarili kong code
+
 }
 
 function createGridCells() {
@@ -43,13 +70,14 @@ function createGridCells() {
             gridCell.style.border = "1px solid whitesmoke";
         } else if (!gridVisible){
             widthHeight = `${(parseInt(gridWidth)/squaresPerSide)}px`;
+            gridCell.style.border = "none";
         }
         gridCell.style.width = gridCell.style.height = widthHeight;
-        gridCell.classList.add("cell");
+       // gridCell.classList.add("cell");
 
         sketchArea.appendChild(gridCell);
 
-        gridCell.addEventListener('mouseenter', setBackgroundColor);
+        gridCell.addEventListener('mouseover', setBackgroundColor);
     }
 }
 
@@ -67,8 +95,13 @@ slider.oninput = function(){
     createGridCells(this.value);
 }
 
+gridToggle.addEventListener("click",toggleGrid);
+
+//sarili kong edit
+eraserToggle.addEventListener("click", toggleEraser);
 
 createGridCells();
+
 
 
 //29:57 
