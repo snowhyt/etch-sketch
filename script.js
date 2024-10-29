@@ -19,7 +19,17 @@ const gridToggle = document.getElementById("grid-toggle");
 
 //sarili kong code eraser
 const eraserToggle = document.getElementById("eraser-toggle");
+const paletteToggle = document.getElementById("palette-toggle");
 let eraserVisible = false;
+let paletteVisible = false;
+
+//paletteFunction
+
+function togglePalette(){
+    paletteVisible = paletteVisible ? false : true;
+    paletteToggle.style.color = paletteVisible ? accentColor : inactiveColor;
+    paletteInterface();
+}
 
 function toggleEraser(){
     eraserVisible = eraserVisible ? false : true;
@@ -99,6 +109,7 @@ gridToggle.addEventListener("click",toggleGrid);
 
 //sarili kong edit
 eraserToggle.addEventListener("click", toggleEraser);
+paletteToggle.addEventListener("click", togglePalette);
 
 createGridCells();
 
