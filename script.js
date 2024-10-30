@@ -20,6 +20,7 @@ const gridToggle = document.getElementById("grid-toggle");
 //sarili kong code eraser
 const eraserToggle = document.getElementById("eraser-toggle");
 const paletteToggle = document.getElementById("palette-toggle");
+const colorInputToggle = document.getElementById("color-picker");
 let eraserVisible = false;
 let paletteVisible = false;
 
@@ -28,7 +29,10 @@ let paletteVisible = false;
 function togglePalette(){
     paletteVisible = paletteVisible ? false : true;
     paletteToggle.style.color = paletteVisible ? accentColor : inactiveColor;
-    paletteInterface();
+    paletteToggle.style.display = 'none';
+    colorInputToggle.style.display = 'block';
+
+    
 }
 
 function toggleEraser(){
@@ -55,7 +59,7 @@ function toggleGrid(){
     createGridCells();
 }
 
-function setBackgroundColor(){
+function setBackgroundColor(e){
     
     
     if (eraserVisible){
@@ -87,7 +91,7 @@ function createGridCells() {
 
         sketchArea.appendChild(gridCell);
 
-        gridCell.addEventListener('mouseover', setBackgroundColor);
+        gridCell.addEventListener('mouseover', (e) => setBackgroundColor (e));
     }
 }
 
@@ -110,6 +114,7 @@ gridToggle.addEventListener("click",toggleGrid);
 //sarili kong edit
 eraserToggle.addEventListener("click", toggleEraser);
 paletteToggle.addEventListener("click", togglePalette);
+
 
 createGridCells();
 
