@@ -3,10 +3,6 @@ const accentColor =getComputedStyle(document.body).getPropertyValue("--accent-co
 const inactiveColor =getComputedStyle(document.body).getPropertyValue("--inactive-color")
 
 
-//sarili kong code eraser
-
-//end
-
 const container = document.querySelector(".container");
 
 const sketchArea = document.getElementById("sketch-area");
@@ -17,39 +13,13 @@ const sliderValue = document.getElementById("slider-value");
 
 const gridToggle = document.getElementById("grid-toggle");
 
-//sarili kong code eraser
-const eraserToggle = document.getElementById("eraser-toggle");
-const paletteToggle = document.getElementById("palette-toggle");
-const colorInputToggle = document.getElementById("color-picker");
-let eraserVisible = false;
-let paletteVisible = false;
-
-//paletteFunction
-
-function togglePalette(){
-    paletteVisible = paletteVisible ? false : true;
-    paletteToggle.style.color = paletteVisible ? accentColor : inactiveColor;
-    paletteToggle.style.display = 'none';
-    colorInputToggle.style.display = 'block';
-
-    
-}
-
-function toggleEraser(){
-    eraserVisible = eraserVisible ? false : true;
-    eraserToggle.style.color = eraserVisible ? accentColor : inactiveColor;
-    setBackgroundColor();
-
-}
-
-
-//end
 
 // sliderValue.textContent = `${slider.value} x ${slider.value} (Resolution)`;
 // sketchArea.style.width = sketchArea.style.height =`${GRIDSIDE}px`;
 
 let squaresPerSide = 16;
 let gridVisible = false;
+let isDrawing = false;
 
 function toggleGrid(){
     gridVisible = gridVisible ? false : true;
@@ -60,22 +30,21 @@ function toggleGrid(){
 }
 
 function setBackgroundColor(e){
-    
-    
-    if (eraserVisible){
-        this.style.backgroundColor = "white";
-    } else {
-        this.style.backgroundColor = "pink";
+    if(e.type === "mousedown"){
+        isDrawing = true;
+        e.target.style.backgroundColor = "black"
     }
-
-    //sarili kong code
+    else if (e.type === "mouseover" && isDrawing){
+        e.target.style.backgroundColor = "black"
+    }
+    else isDrawing = false;
+    
 
 }
 
 function createGridCells() {
 
     const numOfSquares = (squaresPerSide * squaresPerSide);
-    //const widthHeight = `${(gridWidth/squaresPerSide)-2}px`; 
     for(let i = 0; i < numOfSquares; i++){
         const gridCell = document.createElement("div");
       
@@ -89,9 +58,13 @@ function createGridCells() {
         gridCell.style.width = gridCell.style.height = widthHeight;
        // gridCell.classList.add("cell");
 
-        sketchArea.appendChild(gridCell);
+       
 
+        gridCell.addEventListener('mousedown', (e) => setBackgroundColor (e));
         gridCell.addEventListener('mouseover', (e) => setBackgroundColor (e));
+        gridCell.addEventListener('mouseup', () => isDrawing = false);
+        gridCell.addEventListener('drag', (e) => {e. preventDefault()} );
+         sketchArea.appendChild(gridCell);
     }
 }
 
@@ -103,17 +76,14 @@ function removeGridCells(){
 
 
 slider.oninput = function(){
-    let txt = `${this.value} x ${this.value} (Resolution)`;
-    sliderValue.innerHTML = txt;
+    sliderValue.innerHTML = `${this.value} x ${this.value} (Resolution)`;
+    squaresPerSide = parseInt(this.value);
     removeGridCells();
     createGridCells(this.value);
 }
 
 gridToggle.addEventListener("click",toggleGrid);
 
-//sarili kong edit
-eraserToggle.addEventListener("click", toggleEraser);
-paletteToggle.addEventListener("click", togglePalette);
 
 
 createGridCells();
